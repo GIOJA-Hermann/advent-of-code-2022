@@ -94,9 +94,24 @@ void day12(char *part) {
         }
         PRINTF2("\n");
     }
-    printf("%d", res);
+    printf("%d\n", res);
 }
 
-int main(void) {
-    day12("p1");
+void usage() {
+    printf("./dayXX.run [p1|p2] < dayXX.in");
+}
+
+int main(int argc, char *argv[]) {
+    if(argc == 1) usage();
+    if(strcmp(argv[1],"p1") == 0) {
+        printf("===PART1===\n");
+        day12("p1");
+        printf("\n");
+    } else if(strcmp(argv[1],"p2") == 0) {
+        printf("===PART2===\n");
+        day12("p2");
+        printf("\n");
+    } else {
+        usage();
+    }
 }

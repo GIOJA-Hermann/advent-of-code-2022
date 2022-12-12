@@ -16,9 +16,15 @@
     #define PRINTF2(args...) {}
 #endif
 
+long long adder(long long a, long long b) {
+    return a+b;
+}
+long long multiplier(long long a, long long b) {
+    return a*b;
+}
+
 void day11(char *part) {
     struct worry_s;
-    //typedef worry_s worry_t;
     
     typedef struct worry_s {
         long long val;
@@ -37,13 +43,6 @@ void day11(char *part) {
         int count;
     } monkey_t;
     
-    long long adder(long long a, long long b) {
-        return a+b;
-    }
-    long long multiplier(long long a, long long b) {
-        return a*b;
-    }
-
     monkey_t monkeys[10] = {0};
     worry_t wors[40] = {0};
     int nwors = 0;
@@ -97,7 +96,6 @@ void day11(char *part) {
         PRINTF1("LINE 5 --- TRUE: %d\n", monkeys[idx].gotrue);
         scanf("    %*s %*s %*s %*s %*s %d", &monkeys[idx].gofalse);
         PRINTF1("LINE 6 --- FALSE: %d\n", monkeys[idx].gofalse);
-        //fgets(s, 100, stdin);
         PRINTF1("\n");
     }
     
@@ -151,6 +149,21 @@ void day11(char *part) {
     printf("%lld\n", max[0]*max[1]);
 }
 
-int main() {
-    day11("p2");
+void usage() {
+    printf("./dayXX.run [p1|p2] < dayXX.in");
+}
+
+int main(int argc, char *argv[]) {
+    if(argc == 1) usage();
+    if(strcmp(argv[1],"p1") == 0) {
+        printf("===PART1===\n");
+        day11("p1");
+        printf("\n");
+    } else if(strcmp(argv[1],"p2") == 0) {
+        printf("===PART2===\n");
+        day11("p2");
+        printf("\n");
+    } else {
+        usage();
+    }
 }
