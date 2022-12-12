@@ -3,7 +3,7 @@
 #include <string.h>
 
 //#define DEBUG1
-#define DEBUG2
+//#define DEBUG2
 
 #ifdef DEBUG1
     #define PRINTF1(args...) printf(args)
@@ -94,7 +94,7 @@ void day12(char *part) {
         }
         PRINTF2("\n");
     }
-    printf("res = %d", res);
+    printf("%d", res);
 }
 
 int main(void) {
