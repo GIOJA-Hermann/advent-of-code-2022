@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+//#define DEBUG1
+//#define DEBUG2
+#include "debug.h"
 
 
 void calc(int *C, int *X, int *tot) {

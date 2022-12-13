@@ -1,20 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 //#define DEBUG1
 //#define DEBUG2
-
-#ifdef DEBUG1
-    #define PRINTF1(args...) printf(args)
-#else
-    #define PRINTF1(args...) {}
-#endif
-#ifdef DEBUG2
-    #define PRINTF2(args...) printf(args)
-#else
-    #define PRINTF2(args...) {}
-#endif
+#include "debug.h"
 
 void day12(char *part) {
     struct pos_s;
