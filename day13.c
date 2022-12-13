@@ -4,7 +4,6 @@
 //#define DEBUG1
 //#define DEBUG2
 #include "debug.h"
-#include "debug.h"
 
 int isNum(const char *s)     { return (*s >= '0' && *s <= '9'); }
 int isBegList(const char *s) { return (*s == '[' ); }
