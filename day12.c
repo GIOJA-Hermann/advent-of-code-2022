@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-//#define DEBUG1
-//#define DEBUG2
-#include "debug.h"
+#include "common.h"
 
-void day12(char *part) {
+void day(char *part) {
     struct pos_s;
     typedef struct pos_s {
         int x; // top-down, 1st num in array
@@ -84,23 +79,4 @@ void day12(char *part) {
         PRINTF2("\n");
     }
     printf("%d\n", res);
-}
-
-void usage() {
-    printf("./dayXX.run [p1|p2] < dayXX.in");
-}
-
-int main(int argc, char *argv[]) {
-    if(argc == 1) usage();
-    if(strcmp(argv[1],"p1") == 0) {
-        printf("===PART1===\n");
-        day12("p1");
-        printf("\n");
-    } else if(strcmp(argv[1],"p2") == 0) {
-        printf("===PART2===\n");
-        day12("p2");
-        printf("\n");
-    } else {
-        usage();
-    }
 }

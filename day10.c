@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-//#define DEBUG1
-//#define DEBUG2
-#include "debug.h"
-
+#include "common.h"
 
 void calc(int *C, int *X, int *tot) {
     if (!((++(*C)-20)%40))
@@ -52,21 +46,8 @@ void dorender() {
         printf("%.40s\n", P);
 }
 
-void usage() {
-    printf("./dayXX.run [p1|p2] < dayXX.in");
-}
-
-int main(int argc, char *argv[]) {
-    if(argc == 1) usage();
-    if(strcmp(argv[1],"p1") == 0) {
-        printf("===PART1===\n");
-        docalc();
-        printf("\n");
-    } else if(strcmp(argv[1],"p2") == 0) {
-        printf("===PART2===\n");
-        dorender();
-        printf("\n");
-    } else {
-        usage();
-    }
+void day(char *part) {
+    int isp1 = !strcmp(part, "p1");
+    if (isp1) docalc();
+    else dorender();
 }

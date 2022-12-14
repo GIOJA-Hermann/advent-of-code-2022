@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-//#define DEBUG1
-//#define DEBUG2
-#include "debug.h"
+#include "common.h"
 
 int vsI(char c) {return (c - 'A');}
 int meI(char c) {return (c - 'X');}
@@ -23,24 +18,5 @@ void day(const char *part) {
         // part is extrapolated from "me" and always add +3 for positive modulo result
         score += ((vsI(vs) + 3 + meI(me) - 1) % 3) + 1 + meI(me) * 3;
     }
-    printf("%d", score);
-}
-
-void usage() {
-    printf("./dayXX.run [p1|p2] < dayXX.in");
-}
-
-int main(int argc, char *argv[]) {
-    if(argc == 1) usage();
-    if(strcmp(argv[1],"p1") == 0) {
-        printf("===PART1===\n");
-        day("p1");
-        printf("\n");
-    } else if(strcmp(argv[1],"p2") == 0) {
-        printf("===PART2===\n");
-        day("p2");
-        printf("\n");
-    } else {
-        usage();
-    }
+    printf("%d\n", score);
 }

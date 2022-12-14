@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-//#define DEBUG1
-//#define DEBUG2
-#include "debug.h"
+#include "common.h"
 
 long long adder(long long a, long long b) {
     return a+b;
@@ -12,7 +7,7 @@ long long multiplier(long long a, long long b) {
     return a*b;
 }
 
-void day11(char *part) {
+void day(char *part) {
     struct worry_s;
     
     typedef struct worry_s {
@@ -136,23 +131,4 @@ void day11(char *part) {
         }
     }
     printf("%lld\n", max[0]*max[1]);
-}
-
-void usage() {
-    printf("./dayXX.run [p1|p2] < dayXX.in");
-}
-
-int main(int argc, char *argv[]) {
-    if(argc == 1) usage();
-    if(strcmp(argv[1],"p1") == 0) {
-        printf("===PART1===\n");
-        day11("p1");
-        printf("\n");
-    } else if(strcmp(argv[1],"p2") == 0) {
-        printf("===PART2===\n");
-        day11("p2");
-        printf("\n");
-    } else {
-        usage();
-    }
 }
