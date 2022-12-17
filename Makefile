@@ -22,6 +22,13 @@ ifeq ($(dbg2), 1)
 	CFLAGS += -D DEBUG2
 endif
 
+runstats : day${DAY}.run
+	@rm massif.out.*
+	@valgrind --tool=massif --stacks=yes ./day${DAY}.run "p1" < inputs/day${DAY}.in
+	@mv massif.out.* day${DAY}.p1.stat
+	@valgrind --tool=massif --stacks=yes ./day${DAY}.run "p2" < inputs/day${DAY}.in
+	@mv massif.out.* day${DAY}.p2.stat
+
 run : day${DAY}.run
 	@./day${DAY}.run "p1" < inputs/day${DAY}.in
 	@./day${DAY}.run "p2" < inputs/day${DAY}.in
@@ -41,6 +48,7 @@ clean:
 
 mrproper: clean
 	rm -f *.run
+	rm -f *.stat
 
 .PHONY: all run clean mrproper
 .PRECIOUS: obj/%.o
