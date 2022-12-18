@@ -7,6 +7,8 @@
 #define R_MAX_COORD (MAX_COORD + 2)
 #define ALLOC_SIZE (R_MAX_COORD + 1)
 
+#define MAX(x,y) ((x>y)?x:y)
+
 int8_t mx3d[6] = {-1,1,0,0,0,0};
 int8_t my3d[6] = {0,0,-1,1,0,0};
 int8_t mz3d[6] = {0,0,0,0,-1,1};
@@ -23,12 +25,19 @@ void day(const char *part) {
     int isp1 = !strcmp(part, "p1");
 
     uint8_t map3d[ALLOC_SIZE][ALLOC_SIZE][ALLOC_SIZE] = {0};
-    int x,y,z;
+    int x,y,z, maxX = 0, maxY = 0, maxZ = 0;
     uint32_t borders = 0;
     while(scanf("%d,%d,%d\n", &x, &y, &z) == 3) {
+        // Compute max before doing the + 1
+        maxX = MAX(maxX,x);
+        maxY = MAX(maxY,y);
+        maxZ = MAX(maxZ,z);
         x++, y++, z++;
         map3d[x][y][z] = 1;
 
+        // For each new lava add the 6 borders (max) then remove adjacent borders (-2 because remove for both lava blocks)
+        // Low complexity since we process only the added elements, not all possible map slot
+        // Consider that each lava block is added only once
         if(isp1) {
             borders += 6;
             for (int i = 0; i < 6; i++) {
@@ -39,7 +48,14 @@ void day(const char *part) {
         }
     }
     
+    // Add + 2 to the max values for extra map_border slots
+    maxX += 2;
+    maxY += 2;
+    maxZ += 2;
+
     if (!isp1) {
+        // From a known extorior slot (0,0,0) which is out of lava grid (since we did +1 to all)
+        // Explore to find all air blocks and count adjacent lava borders
         // From 0,0,0 explore and count
         explore_t *bExp, *eExp, *exp, *nExp = malloc(sizeof(explore_t));
         *nExp = (explore_t){.x=0, .y=0, .z=0, .next=NULL};
@@ -56,7 +72,7 @@ void day(const char *part) {
                 int8_t ny = exp->y+my3d[i];
                 int8_t nz = exp->z+mz3d[i];
                 // Skip if out of map
-                if (nx > R_MAX_COORD || nx < 0 || ny > R_MAX_COORD || ny < 0 || nz > R_MAX_COORD || nz < 0)
+                if (nx > maxX || nx < 0 || ny > maxY || ny < 0 || nz > maxZ || nz < 0)
                     continue;
                 uint8_t mapVal = map3d[nx][ny][nz];
                 if (mapVal == 1) {
