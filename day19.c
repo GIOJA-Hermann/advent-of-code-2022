@@ -13,7 +13,7 @@ typedef struct way_s {
 
 void day(const char *part) {
     int isp1 = !strcmp(part, "p1");
-    
+
     // x = type (ore, clay, obsidian, geode) , y0 = ore cost, y1 = other cost
     int cost[4][2];
     int maxCostOre;
@@ -97,8 +97,7 @@ void day(const char *part) {
                             nWay->resources[j - 1] -= cost[j][1];
                         }
                         // A bit harder optimization for "last minutes" : If way used will not be able to catch up other better ones, stop trying it
-                        // TODO : proper algorithm should be : endGeode + n*(n+1)/2 (num of geode that are still unknowned if produced) with n = minutesMax - nWay->minute ... but seems to work only with +1 on that. Try to understand why ????
-                        if ((nWay->endGeode + ((minutesMax - nWay->minute + 2)*(minutesMax - nWay->minute + 1))/2) > endGeodeMax) {
+                        if ((nWay->endGeode + ((minutesMax - nWay->minute)*(minutesMax - nWay->minute + 1))/2) >= endGeodeMax) {
                             eWay->next = nWay;
                             eWay = nWay;
                         } else {
