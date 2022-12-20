@@ -2,12 +2,19 @@
 
 #define MAX(x,y) ((x>y)?x:y)
 
+//---------------------------------
+// Special mention to TitouanT (https://github.com/TitouanT)
+// who suggested to me the "negate" optimisation to replace my
+// ugly fine tuning which allowed me to pass the day at first
+//---------------------------------
+
 struct way_s;
 typedef struct way_s {
     uint8_t  robots[4];
     uint16_t resources[4];
     uint8_t minute;
     uint64_t endGeode;
+    uint8_t negate;
     struct way_s *next;
 } way_t;
 
@@ -71,6 +78,10 @@ void day(const char *part) {
                 way->resources[j] += way->robots[j];
             }
 
+#if 0
+// This code was a fine tuning (exercise "hack") which allowed the code without negate optimisation to pass with provided inputs
+// Leaving it here to remember how shitty it was :D ... but still worked !
+
             if (!isp1) {
                 // Add a set of arbitrary threshold (still reasonable) to flush some of the worst possibilities as soon as possible
                 // This part is quite dumb and will most likely work for any input but ... without it, segfaulting at minute 6.
@@ -79,16 +90,18 @@ void day(const char *part) {
                     goto gonext;
                 }
             }
+#endif
 
             if (way->minute < minutesMax) {
                 // Increment now, way will be added back to the loop too
                 way->minute++;
                 for (int j=0; j<4;j++) {
-                    if (produce & (0x1 << j)) {
+                    if (produce & (~way->negate) & (0x1 << j)) {
                         nWay = malloc(sizeof(way_t));
                         *nWay = *way;
                         nWay->robots[j]++;
                         nWay->resources[0] -= cost[j][0];
+                        nWay->negate = 0;
                         // Time during which new robot will produce
                         if (j == 3) nWay->endGeode += minutesMax - nWay->minute + 1;
                         endGeodeMax = MAX(endGeodeMax, nWay->endGeode);
@@ -105,6 +118,8 @@ void day(const char *part) {
                         }
                     }
                 }
+                // Disallow producing later a robot we could do now when not producing
+                way->negate = produce;
             }
 
             if (way->minute == minutesMax) {
