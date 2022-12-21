@@ -67,10 +67,8 @@ void day(const char *part) {
     int isp1 = !strcmp(part, "p1");
     target_t root = {0};
     target_t humn = {0};
-    target_t lvvf = {0};
     strcpy(root.str, "root");
     strcpy(humn.str, "humn");
-    strcpy(lvvf.str, "lvvf");
 
     uint32_t rootIdx, n1Idx, n2Idx, found = 0;
     int64_t n1val, n2val, humnVal, humnValKeep;
